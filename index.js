@@ -10,21 +10,24 @@ function addItem(){
     $('#js-shopping-list-form').on('submit', event => {
         event.preventDefault();
         let shoppingItem = $('#shopping-list-entry').val();
-        $('#shopping-list-entry').val("");
         console.log(shoppingItem);
-        $('ul.shopping-list').append(`
-        <li>
-        <span class="shopping-item">${shoppingItem}</span>
-        <div class="shopping-item-controls">
-          <button class="shopping-item-toggle">
-            <span class="button-label">check</span>
-          </button>
-          <button class="shopping-item-delete">
-            <span class="button-label">delete</span>
-          </button>
-        </div>
-        </li>`
-        );
+        if(shoppingItem !== ""){
+          $('#shopping-list-entry').val("");
+          console.log(shoppingItem);
+          $('ul.shopping-list').append(`
+          <li>
+          <span class="shopping-item">${shoppingItem}</span>
+          <div class="shopping-item-controls">
+            <button class="shopping-item-toggle">
+              <span class="button-label">check</span>
+            </button>
+            <button class="shopping-item-delete">
+              <span class="button-label">delete</span>
+            </button>
+          </div>
+          </li>`
+          );
+        }
     });
 }
 
@@ -34,9 +37,12 @@ function addItem(){
  */
 
 $('ul.shopping-list').on('click', "li .shopping-item-toggle", function() {
-    console.log("You are trying to remove this item" + this);
+    //console.log("You are trying to remove this item" + this);
     let currentItem = $(this).parent().parent();
     let foodLabel = currentItem.children('span');
+    // I could've done
+    //let foodLabel = $(this).closest("li").children('span');
+    console.log(foodLabel);
     foodLabel.toggleClass('shopping-item__checked');
     //currentItem.detach();
 });
@@ -48,6 +54,8 @@ $('ul.shopping-list').on('click', "li .shopping-item-toggle", function() {
  $('ul.shopping-list').on('click', "li .shopping-item-delete", function() {
     console.log("You are trying to remove this item" + this);
     let currentItem = $(this).parent().parent();
+    // I could've done
+    //let currentItem = $(this).closest("li");
     currentItem.detach();
 });
 $(addItem);
